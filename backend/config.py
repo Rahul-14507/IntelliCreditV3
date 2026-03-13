@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     database_url: str = "sqlite+aiosqlite:///./intellicredit.db"
     upload_dir: str = "./uploads"
     max_file_size_mb: int = 50
-    cors_origins: List[str] = ["http://localhost:3000", "https://intellicredit-frontend.railway.app"]
+    cors_origins: List[str] = ["*"]
     port: int = 8000
 
     class Config:
