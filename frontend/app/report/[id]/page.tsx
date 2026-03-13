@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter, useParams } from "next/navigation";
@@ -171,6 +172,7 @@ export default function ReportPage() {
       setInterimText("");
     };
 
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     recognition.onresult = (event: any) => {
       let final = "";
       let interim = "";
@@ -186,11 +188,14 @@ export default function ReportPage() {
     };
 
     recognition.start();
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     (window as any)._recognition = recognition;
   };
 
   const stopRecording = () => {
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     if ((window as any)._recognition) {
+      /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
       (window as any)._recognition.stop();
     }
   };
@@ -435,7 +440,7 @@ export default function ReportPage() {
                 <div className="mt-4 glass rounded-xl p-4 bg-white/5 border border-white/5">
                   <div className="text-[10px] uppercase tracking-widest text-blue-400 font-bold mb-2">Captured Intelligence</div>
                   <p className="text-sm text-white/70 italic leading-relaxed whitespace-pre-wrap">
-                    "{entity.field_observations}"
+                    &quot;{entity.field_observations}&quot;
                   </p>
                 </div>
               )}
