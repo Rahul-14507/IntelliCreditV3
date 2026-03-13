@@ -50,6 +50,7 @@ export default function ReportPage() {
   const [entity, setEntity] = useState<Entity | null>(null);
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [status, setStatus] = useState({ research_status: "not_started", analysis_status: "not_started" });
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [activeResearchTab, setActiveResearchTab] = useState<"news" | "legal" | "macro">("news");
   const [expandedSteps, setExpandedSteps] = useState<Set<number>>(new Set([1]));
   const [resettingAndRerunning, setResettingAndRerunning] = useState(false);
@@ -248,6 +249,11 @@ export default function ReportPage() {
     // Kick off research + analysis if not started
     (async () => {
       const s = await loadStatus();
+      if (s?.analysis_status === "done") {
+        await loadAnalysis();
+      }
+      setIsInitialLoading(false);
+      
       if (!s) return;
 
       // 1. Trigger research if not started or stuck in pending
@@ -317,6 +323,7 @@ export default function ReportPage() {
   };
 
   const isLoading = status.analysis_status !== "done";
+  const showDetailedLoading = !isInitialLoading && isLoading;
 
   const radarData = analysis?.scores
     ? [
@@ -370,7 +377,7 @@ export default function ReportPage() {
 
       <main className="max-w-7xl mx-auto px-6 py-8">
         {/* Loading state */}
-        {isLoading && (
+        {showDetailedLoading && (
           <div className="glass-card p-10 text-center mb-6 animate-fade-in">
             <div className="w-16 h-16 rounded-full border-4 border-blue-500/20 border-t-blue-500 animate-spin mx-auto mb-6" />
             <h2 className="text-xl font-bold mb-2 gradient-text">AI Analysis in Progress</h2>
