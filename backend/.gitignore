@@ -1,0 +1,12 @@
+# Backend .gitignore
+__pycache__/
+*.pyc
+venv/
+.venv/
+.env
+*.db
+uploads/
+*.log
+.DS_Store
+.idea/
+.vscode/
